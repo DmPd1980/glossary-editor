@@ -17,18 +17,21 @@ export function loadGlossary() {
 }
 
 export function findGlossaryMatches(text, glossary) {
+  // Проверяем, что текст и глоссарий существуют
   if (!text || !Array.isArray(glossary)) {
     console.warn('Некорректные входные данные:', { text, glossary });
     return [];
   }
 
-  const lowerCaseText = text.toLowerCase();
+  // Фильтруем термины, которые встречаются в тексте
   return glossary.filter(entry => {
     try {
-      const lowerCaseTerm = entry.term.toLowerCase();
-      return lowerCaseText.includes(lowerCaseTerm);
+      // Создаем безопасное регулярное выражение
+      const escapedTerm = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Экранируем специальные символы
+      const regex = new RegExp(`\\b${escapedTerm}\\b`, 'gi');
+      return regex.test(text);
     } catch (error) {
-      console.error('Ошибка при поиске совпадений:', error);
+      console.error('Ошибка при создании регулярного выражения:', error);
       return false;
     }
   });
