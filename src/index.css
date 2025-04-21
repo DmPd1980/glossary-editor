@@ -1,5 +1,26 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
+/* src/index.css */
+.App {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
