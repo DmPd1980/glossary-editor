@@ -1,37 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { findGlossaryMatches } from './GlossaryService';
 
-export default function Editor() {
-  const [text, setText] = useState("");
-  const [matches, setMatches] = useState([]);
+const Editor = ({ glossary }) => {
+  const [inputValue, setInputValue] = React.useState('');
 
-  useEffect(() => {
-    const found = findGlossaryMatches(text);
-    setMatches(found);
-  }, [text]);
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const matchingTerms = findGlossaryMatches(inputValue, glossary);
 
   return (
-    <div style={{ maxWidth: "800px", margin: "auto" }}>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        rows={8}
-        style={{ width: "100%", padding: "1em", fontSize: "1em" }}
+    <div>
+      <h2>Редактор с глоссарием</h2>
+      <input
+        type="text"
         placeholder="Введите текст..."
+        value={inputValue}
+        onChange={handleInputChange}
+        style={{
+          width: "100%",
+          padding: "10px",
+          marginBottom: "10px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+        }}
       />
-      <div style={{ marginTop: "1em" }}>
-        {matches.length > 0 && (
-          <div style={{ background: "#fff8dc", padding: "1em", borderRadius: "8px" }}>
-            <h4>Найденные термины:</h4>
-            <ul>
-              {matches.map((match, i) => (
-                <li key={i}><strong>{match.term}</strong>: {match.definition}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      {matchingTerms.length > 0 && (
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {matchingTerms.map(term => (
+            <li
+              key={term.term}
+              style={{
+                backgroundColor: "#f9f9f9",
+                padding: "10px",
+                marginBottom: "5px",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+              }}
+            >
+              <strong>{term.term}:</strong> {term.definition}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-}
+};
 
+export default Editor;
