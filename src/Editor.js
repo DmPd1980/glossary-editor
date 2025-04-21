@@ -5,9 +5,7 @@ const Editor = ({ glossary }) => {
   const [inputValue, setInputValue] = React.useState('');
 
   const handleInputChange = (event) => {
-    const value = event.target.value;
-    console.log('Текущий ввод:', value); // Логирование
-    setInputValue(value);
+    setInputValue(event.target.value);
   };
 
   const matchingTerms = findGlossaryMatches(inputValue, glossary);
