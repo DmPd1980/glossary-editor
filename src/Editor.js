@@ -10,8 +10,6 @@ const Editor = ({ glossary }) => {
     setInputValue(value);
   };
 
-  console.log('Состояние inputValue:', inputValue); // Логирование
-
   const matchingTerms = findGlossaryMatches(inputValue, glossary);
 
   return (
