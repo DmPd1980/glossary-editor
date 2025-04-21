@@ -12,7 +12,6 @@ const Editor = ({ glossary }) => {
 
   return (
     <div>
-      <h2>Редактор с глоссарием</h2>
       <input
         type="text"
         placeholder="Введите текст..."
