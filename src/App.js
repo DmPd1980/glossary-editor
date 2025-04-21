@@ -1,16 +1,13 @@
 import React from 'react';
-import Editor from './Editor'; // Импортируем компонент Editor
+import Editor from './Editor';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Glossary Editor</h1>
-      <Editor /> {/* Рендерим компонент Editor */}
+    <div>
+      <h2 style={{ textAlign: "center", marginTop: "1rem" }}>Редактор с глоссарием</h2>
+      <Editor />
     </div>
   );
 }
 
 export default App;
-
-export default App;
-
