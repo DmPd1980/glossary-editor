@@ -17,7 +17,8 @@ export function loadGlossary() {
 }
 
 export function findGlossaryMatches(text, glossary) {
-  // Проверяем, что текст и глоссарий существуют
+  console.log('Поиск совпадений:', { text, glossary });
+  
   if (!text || !Array.isArray(glossary)) {
     console.warn('Некорректные входные данные:', { text, glossary });
     return [];
@@ -26,10 +27,11 @@ export function findGlossaryMatches(text, glossary) {
   // Фильтруем термины, которые встречаются в тексте
   return glossary.filter(entry => {
     try {
-      // Создаем безопасное регулярное выражение
       const escapedTerm = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Экранируем специальные символы
       const regex = new RegExp(`\\b${escapedTerm}\\b`, 'gi');
-      return regex.test(text);
+      const match = regex.test(text);
+      console.log('Совпадение для термина:', entry.term, match); // Логирование
+      return match;
     } catch (error) {
       console.error('Ошибка при создании регулярного выражения:', error);
       return false;
