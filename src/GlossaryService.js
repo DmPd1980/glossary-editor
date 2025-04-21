@@ -1,5 +1,3 @@
-// src/GlossaryService.js
-
 export function loadGlossary() {
   return fetch('/glossary.json')
     .then(response => {
@@ -8,6 +6,10 @@ export function loadGlossary() {
       }
       return response.json();
     })
+    .then(data => {
+      console.log('Загруженный глоссарий:', data); // Логирование
+      return data;
+    })
     .catch(error => {
       console.error('Ошибка загрузки глоссария:', error);
       return [];
@@ -15,21 +17,18 @@ export function loadGlossary() {
 }
 
 export function findGlossaryMatches(text, glossary) {
-  // Проверяем, что текст и глоссарий существуют
   if (!text || !Array.isArray(glossary)) {
     console.warn('Некорректные входные данные:', { text, glossary });
     return [];
   }
 
-  // Фильтруем термины, которые встречаются в тексте
+  const lowerCaseText = text.toLowerCase();
   return glossary.filter(entry => {
     try {
-      // Создаем безопасное регулярное выражение
-      const escapedTerm = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Экранируем специальные символы
-      const regex = new RegExp(`\\b${escapedTerm}\\b`, 'gi');
-      return regex.test(text);
+      const lowerCaseTerm = entry.term.toLowerCase();
+      return lowerCaseText.includes(lowerCaseTerm);
     } catch (error) {
-      console.error('Ошибка при создании регулярного выражения:', error);
+      console.error('Ошибка при поиске совпадений:', error);
       return false;
     }
   });
